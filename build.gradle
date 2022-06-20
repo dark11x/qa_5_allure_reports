@@ -1,0 +1,38 @@
+plugins {
+    id 'java-library'
+    id "io.qameta.allure" version "2.10.0"
+}
+
+repositories {
+    mavenCentral()
+}
+
+def selenideVersion = "5.19.0",
+    junitVersion = "5.7.1"
+
+compileJava.options.encoding = 'UTF-8'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+allure {
+    adapter.autoconfigure = true
+    adapter.aspectjWeaver = true
+    version = '2.13.8'
+
+    useJUnit5 {
+        version = '2.13.8'
+    }
+}
+
+dependencies {
+    testImplementation (
+            "com.codeborne:selenide:$selenideVersion",
+            "org.junit.jupiter:junit-jupiter-api:$junitVersion")
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
+}
+
+test {
+    useJUnitPlatform()
+}
